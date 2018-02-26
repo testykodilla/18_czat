@@ -1,10 +1,11 @@
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-var OptimizeJsPlugin = require('optimize-js-plugin');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeJsPlugin = require('optimize-js-plugin');
 const path = require('path');
-var env = process.env.NODE_ENV || 'development';
-var plugins = [
+
+const env = process.env.NODE_ENV || 'development';
+const plugins = [
     new HtmlWebpackPlugin({
         template: 'client/index.html',
         filename: 'index.html',
@@ -15,12 +16,12 @@ var plugins = [
 console.log('NODE_ENV:', env);
 
 if (env === 'production') {
-plugins.push(
-    new webpack.optimize.UglifyJsPlugin(),
-    new OptimizeJsPlugin({
-        sourceMap: false
-    })
-  );
+    plugins.push(
+        new webpack.optimize.UglifyJsPlugin(),
+        new OptimizeJsPlugin({
+            sourceMap: false
+        })
+    );
 }
 
 module.exports = {
@@ -32,15 +33,6 @@ module.exports = {
     output: {
         filename: './bundle.js',
         path: path.resolve(__dirname, 'public'),
-    },
-    entry: [
-        'react-hot-loader/patch',
-        './client/index.js'
-    ],
-    entry: './client/index.js',
-        output: {
-        path: path.resolve(__dirname, 'public'),
-        filename: 'bundle.js'
     },
     module: {
         rules: [
@@ -62,5 +54,8 @@ module.exports = {
             }
         ]
     },
-    plugins: plugins
+    plugins: plugins,
+    resolve: {
+        extensions: ['.js']
+    }
 };
